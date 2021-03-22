@@ -69,11 +69,15 @@ const writeXlsx = (data, name, sheetOptions) => {
     })
 }
 
+const config = {
+    cookie: 'gr_user_id=0ce012ec-0221-4321-b82c-54e0d1468f68; client_id=57767985; access-edu_online=e317a1c29c47e68905bbdde677901229; kd_user_id=5ca582fe-d681-41ce-b42f-139829b67792; 99f53b614ce96c83_gr_last_sent_cs1=5842351; everySentence_22=36; 99f53b614ce96c83_gr_session_id=ed10246a-105c-4957-8c36-4afcab86ba7b; 99f53b614ce96c83_gr_last_sent_sid_with_cs1=ed10246a-105c-4957-8c36-4afcab86ba7b; 99f53b614ce96c83_gr_session_id_ed10246a-105c-4957-8c36-4afcab86ba7b=true; Hm_lpvt_156e88c022bf41570bf96e74d090ced7=1616403097; Hm_lvt_156e88c022bf41570bf96e74d090ced7=1615969593,1616031479,1616396869,1616403097; kd_5d6526d7-3c9f-460b-b6cf-ba75397ce1ac_log_id=zSKtJYMaziqFNe8kmzq%3Af9e09eb7-f5b4-4926-a8c7-79bada84f3fd%3A11f06832-39ed-48df-b8d9-23255426fa7b; 99f53b614ce96c83_gr_cs1=5842351; kd_5d6526d7-3c9f-460b-b6cf-ba75397ce1ac_kuickDeal_pageIndex=3; kd_5d6526d7-3c9f-460b-b6cf-ba75397ce1ac_view_log_id=6zcze5bni1jTKctMaqK',
+    authorization: 'Bearer pc:e317a1c29c47e68905bbdde677901229',
+    accessToken: 'bsy1000000000007.1616403384135.ba911a31b50141c3919959482437265c.2027176802'
+}
 
 const customSuperAgent = (url) => {
-    const cookie = 'gr_user_id=0ce012ec-0221-4321-b82c-54e0d1468f68; 99f53b614ce96c83_gr_session_id=9aef5954-c5fc-4b3a-a009-df638621500f; 99f53b614ce96c83_gr_session_id_9aef5954-c5fc-4b3a-a009-df638621500f=true; client_id=57767985; ssoToken=fbffa2e7df242f93e0ed541709fd9d22; access-edu_online=e317a1c29c47e68905bbdde677901229; kd_user_id=5ca582fe-d681-41ce-b42f-139829b67792; kd_5d6526d7-3c9f-460b-b6cf-ba75397ce1ac_log_id=UBMuLAvvAUy7RGYoQIM%3A350cebdc-76ea-477f-a94b-909413e191f0%3A11f06832-39ed-48df-b8d9-23255426fa7b; everySentence_16=32; kd_5d6526d7-3c9f-460b-b6cf-ba75397ce1ac_kuickDeal_leaveTime=1615859034549; kd_5d6526d7-3c9f-460b-b6cf-ba75397ce1ac_kuickDeal_pageIndex=4; kd_5d6526d7-3c9f-460b-b6cf-ba75397ce1ac_view_log_id=sXtcD0RMoiS4Dexlmiu'
     return new Promise((resolve, reject) => {
-        superagent.get(url).set('Cookie', cookie).set('authorization', 'Bearer pc:e317a1c29c47e68905bbdde677901229').end((err,res) =>{
+        superagent.get(url).set('Cookie', config.cookie).set('authorization', config.authorization).end((err,res) =>{
             if(err){
                 return reject(err)
             }
@@ -120,7 +124,7 @@ const excuteAngent = async () => {
                                                                 const { video_id, callback_key, url, name } = content[con]
                                                                 const index = data.findIndex(i => i.name === course_name)
                                                                 if(video_id){ 
-                                                                    const videoUrl = `https://api-vod.baoshiyun.com/vod/v1/platform/media/detail?mediaId=${callback_key}&accessToken=bsy1000000000007.1615946711266.33bd09fc6ead4b42a5c16da7dd21e4eb.2027176802`
+                                                                    const videoUrl = `https://api-vod.baoshiyun.com/vod/v1/platform/media/detail?mediaId=${callback_key}&accessToken=${config.accessToken}`
                                                                     await customSuperAgent(videoUrl).then(async res => {
                                                                         const { mediaMetaInfo } = res.body.data
                                                                         if(mediaMetaInfo){
